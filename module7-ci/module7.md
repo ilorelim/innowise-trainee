@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
 ```
 
-**Steps:** checkout → setup-python → `pip install` → `flake8` → `pytest`.
+**Steps:** checkout → setup-python → `pip install` → `flake8 app.py tests` → `pytest`.
 
 Рабочая директория шагов — `module7-ci` (там `requirements.txt` и `tests/`).
 
@@ -96,8 +96,12 @@ jobs:
 
 # 5. Практика: PR и статус Checks
 
-1. Закоммитить изменения модуля 7.
-2. Открыть PR в `main`.
+1. Закоммитить изменения модуля 7 (сделано).
+2. Запушить ветку и открыть PR в `main`:
+   ```bash
+   git push -u origin HEAD
+   # затем PR: feature → main (через GitHub UI или gh pr create)
+   ```
 3. GitHub Actions запускает job `test`.
 4. В PR появляется зелёная галочка (успех) или красный крестик (падение).
 

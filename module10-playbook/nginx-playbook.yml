@@ -1,0 +1,30 @@
+---
+- name: Configure nginx
+  hosts: local
+  become: true
+  vars:
+    nginx_port: 80
+  tasks:
+    - name: Update apt cache
+      apt: 
+        update_cache: yes
+    - name: Install Nginx
+      apt: 
+        name: nginx
+        state: present
+    - name: Start Nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
+    - name: Create nginx config
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        mode: "0644"
+      notify: Restart Nginx
+  handlers:
+    - name: Restart Nginx 
+      service:
+        name: nginx 
+        state: restarted

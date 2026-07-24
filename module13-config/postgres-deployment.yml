@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-app
+  labels:
+    app: postgres-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-app
+  template:
+    metadata:
+      labels:
+        app: postgres-app
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14-alpine
+          volumeMounts:
+            - name: pg-data
+              mountPath: /var/lib/postgresql/data
+          envFrom:
+            - configMapRef:
+                name: postgres-configmap
+            - secretRef:
+                name: postgres-secret
+          
+      volumes:  
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+          
